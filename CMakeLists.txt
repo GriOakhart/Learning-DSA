@@ -4,7 +4,8 @@ project(DataStruct_cpp)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(DataStruct_cpp main.cpp
-        SeqQueue.h
+#        SeqQueue.h
+        LinkedQueue.h
         #        LinkedStack.h
         #        CyclicLL.cpp
 #        CyclicLL.h

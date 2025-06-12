@@ -1,22 +1,24 @@
 #include <iostream>
 #include <string>
-#include "SeqQueue.h"
+#include "LinkedQueue.h"
 
 int main()
 {
-    SeqQueue<std::string> queue;
-    queue.enqueue("hello");
-    queue.enqueue("james");
-    while (!queue.isEmpty())
+    LinkedQueue<std::string> myQueue;
+    myQueue.enqueue("hello");
+    myQueue.enqueue("world");
+    myQueue.enqueue("and");
+    while (!myQueue.isEmpty())
     {
-        std::cout << queue.dequeue().value() << std::endl;
+        std::cout << myQueue.dequeue().value() << std::endl;
     }
-    queue.enqueue("good");
-    queue.enqueue("bye");
-    queue.enqueue("?");
-    while (!queue.isEmpty())
+    myQueue.enqueue("james");
+    myQueue.enqueue("welcome");
+    myQueue.enqueue("to");
+    myQueue.enqueue("new world!");
+    while (!myQueue.isEmpty())
     {
-        std::cout << queue.dequeue().value() << std::endl;
+        std::cout << myQueue.dequeue().value() << std::endl;
     }
     return 0;
 }
