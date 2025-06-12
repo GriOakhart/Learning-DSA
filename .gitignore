@@ -1,0 +1,47 @@
+# 编译产生的文件
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# CMake生成的文件和目录
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Testing/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# IDE生成的文件和目录
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 可执行文件
+DataStruct_cpp
+
+# 调试信息文件
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# 依赖管理工具生成的文件和目录
+/build/
+/lib/
+/bin/
+
+# 日志文件
+*.log
