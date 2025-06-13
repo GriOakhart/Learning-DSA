@@ -1,24 +1,30 @@
 #include <iostream>
-#include <string>
 #include "LinkedQueue.h"
 
 int main()
 {
-    LinkedQueue<std::string> myQueue;
-    myQueue.enqueue("hello");
-    myQueue.enqueue("world");
-    myQueue.enqueue("and");
-    while (!myQueue.isEmpty())
+    // Initialization...
+    LinkedQueue<int> myQueue;
+    myQueue.enqueue(0);
+    myQueue.enqueue(1);
+
+    int row { 0 };
+    while (row <= 5)
     {
-        std::cout << myQueue.dequeue().value() << std::endl;
-    }
-    myQueue.enqueue("james");
-    myQueue.enqueue("welcome");
-    myQueue.enqueue("to");
-    myQueue.enqueue("new world!");
-    while (!myQueue.isEmpty())
-    {
-        std::cout << myQueue.dequeue().value() << std::endl;
+        // enqueue the element
+        if (myQueue.show().value().get() == 0)
+            myQueue.enqueue(0);
+        auto out { myQueue.dequeue().value() };
+        myQueue.enqueue(out + myQueue.show().value().get());
+
+        // print the dequeued element
+        if (out == 0)
+        {
+            std::cout << std::endl;
+            ++row;
+        }
+        else
+            std::cout << out << ' ';
     }
     return 0;
 }

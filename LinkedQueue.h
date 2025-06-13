@@ -39,6 +39,7 @@
 //     return out;
 // }
 
+#include <functional>
 #include <memory>
 #include <optional>
 
@@ -55,6 +56,7 @@ public:
     LinkedQueue() = default;
     void enqueue(const T& data);
     std::optional<const T> dequeue();
+    std::optional<std::reference_wrapper<const T>> show() const;
     void clear();
     [[nodiscard]] bool isEmpty() const;
 private:
@@ -91,6 +93,13 @@ template <typename T>
 bool LinkedQueue<T>::isEmpty() const
 {
     return m_count == 0;
+}
+
+template <typename T>
+std::optional<std::reference_wrapper<const T>> LinkedQueue<T>::show() const
+{
+    if (isEmpty()) return std::nullopt;
+    return std::cref(m_front->data);
 }
 
 template <typename T>
