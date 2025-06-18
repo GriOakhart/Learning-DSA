@@ -4,18 +4,18 @@
 int main()
 {
     // Initialization...
-    LinkedQueue<int> myQueue;
-    myQueue.enqueue(0);
-    myQueue.enqueue(1);
+    LinkedQueue<int> TrianglePascal;
+    TrianglePascal.enqueue(0);
+    TrianglePascal.enqueue(1);
 
     int row { 0 };
     while (row <= 5)
     {
         // enqueue the element
-        if (myQueue.show().value().get() == 0)
-            myQueue.enqueue(0);
-        auto out { myQueue.dequeue().value() };
-        myQueue.enqueue(out + myQueue.show().value().get());
+        if (TrianglePascal.show().value().get() == 0)
+            TrianglePascal.enqueue(0);
+        auto out { TrianglePascal.dequeue().value() };
+        TrianglePascal.enqueue(out + TrianglePascal.show().value().get());
 
         // print the dequeued element
         if (out == 0)

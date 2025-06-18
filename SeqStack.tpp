@@ -5,6 +5,7 @@
 template <typename T>
 bool SeqStack<T>::push(const T& obj)
 {
+    // std::cerr << obj << " is being pushed" << std::endl;
     if (m_top >= kDefaultCapacity - 1) return false;
     m_datas[++m_top] = obj;
     return true;
@@ -13,6 +14,7 @@ bool SeqStack<T>::push(const T& obj)
 template <typename T>
 std::optional<std::reference_wrapper<const T>> SeqStack<T>::top() const
 {
+    // std::cerr << "showing " << m_datas[m_top] << std::endl;
     if (empty()) return std::nullopt;
     return std::cref(m_datas[m_top]);
 }
@@ -26,6 +28,7 @@ bool SeqStack<T>::empty() const
 template <typename T>
 std::optional<const T> SeqStack<T>::pop()
 {
+    // std::cerr << m_datas[m_top] << " is being popped" << std::endl;
     if (empty()) return std::nullopt;
     return std::cref(m_datas[m_top--]);
 }

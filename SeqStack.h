@@ -6,7 +6,6 @@
 #define SEQSTACK_H
 
 #include <functional>
-#include <iostream>
 #include <memory>
 #include <optional>
 
