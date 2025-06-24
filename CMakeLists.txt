@@ -3,11 +3,14 @@ project(DataStruct_cpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(DataStruct_cpp main.cpp
+add_executable(DataStruct_cpp
+#        Infix_to_Suffix.cpp
+        Eight_Queen.cpp
+        #        Infix_Expression_evaluator.cpp
 #        SeqQueue.h
 #        LinkedQueue.h
-        #        LinkedStack.h
-        #        CyclicLL.cpp
+#        LinkedStack.h
+#        CyclicLL.cpp
 #        CyclicLL.h
 #        SeqList.h
 #        AcademicClass.cpp
