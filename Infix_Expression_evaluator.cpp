@@ -64,26 +64,19 @@ int main(int argc, char* argv[])
             ++current;
             continue;
         case Type::Operator:
-            // directly push if sOperator is empty and continue
-            if (sOperators.empty())
-            {
-                sOperators.push(myExpression[current]);
-                ++current;
-                continue;
-            }
             // if the previous operator is of higher priority, do calculation first
-            while (getPriority(sOperators.top().value().get()) >= getPriority(myExpression[current]))
-            {
-                int b { sOperands.pop().value() };
-                int a { sOperands.pop().value() };
-                sOperands.push(calculate(a, b, sOperators.pop().value()));
-                // break if no operator left in the stack
-                if (sOperators.empty()) break;
-            }
+            if (!sOperators.empty())
+                while (getPriority(sOperators.top().value().get()) >= getPriority(myExpression[current]))
+                {
+                    int b { sOperands.pop().value() };
+                    int a { sOperands.pop().value() };
+                    sOperands.push(calculate(a, b, sOperators.pop().value()));
+                    // break if no operator left in the stack
+                    if (sOperators.empty()) break;
+                }
             // then push the current operator and move to next
             sOperators.push(myExpression[current]);
             ++current;
-            continue;
         }
     }
 
