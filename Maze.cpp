@@ -52,6 +52,23 @@ int getIndex(int row, int col)
     return row * Setting::kMazeSizeCol + col;
 }
 
+void printMaze(int maze[], int sizeRow, int sizeCol)
+{
+    for (int row { 0 }; row < sizeRow; ++row)
+    {
+        for (int col { 0 }; col < sizeCol; ++col)
+        {
+            switch (maze[getIndex(row, col)])
+            {
+                case 0: std::cout << ".."; break;
+                case 1: std::cout << "##"; break;
+                case 2: std::cout << "~~"; break;
+            }
+        }
+        std::cout << '\n';
+    }
+}
+
 int main(int argc, char* argv[])
 {
     int maze[Setting::kMazeSizeRow * Setting::kMazeSizeCol]
@@ -67,6 +84,7 @@ int main(int argc, char* argv[])
         1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1
     };
+    printMaze(maze, Setting::kMazeSizeRow, Setting::kMazeSizeCol);
     Setting::Position start { 1, 1 };
     Setting::Position end { Setting::kMazeSizeRow - 2, Setting::kMazeSizeCol - 2 };
     auto currentPos { start };
@@ -75,6 +93,8 @@ int main(int argc, char* argv[])
     Setting::Direction dir { Setting::Direction::east };
     while (currentPos != end)
     {
+        // find any legal move by this order:
+        // east -> south -> west -> north
         while (dir < Setting::Direction::MAX_DIRECTION)
         {
             auto nextPos { currentPos + Setting::direction[dir] };
@@ -100,12 +120,24 @@ int main(int argc, char* argv[])
         {
             do
             {
+                if (path.empty())
+                {
+                    std::cout << "no solution!\n";
+                    return 1;
+                }
                 currentPos = path.pop().value();
                 maze[getIndex(currentPos.row, currentPos.col)] = 0;
             } while (currentPos.dir == Setting::Direction::north);
-            dir = ++currentPos.dir;
+            // north is the last direction to check, so
+            // when dir is north, there will be no more choice
+            dir = static_cast<Setting::Direction>(currentPos.dir + 1);
         }
     }
+    // push and mark the endpoint
+    path.push(currentPos);
+    maze[getIndex(currentPos.row, currentPos.col)] = 2;
+    std::cout << "found solution!\n";
+    printMaze(maze, Setting::kMazeSizeRow, Setting::kMazeSizeCol);
     return 0;
 }
 
