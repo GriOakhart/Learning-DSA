@@ -1,11 +1,15 @@
 //
 // Created by jason on 6/24/25.
 //
+// They have different time complexity for the conflict checking step:
+// the iterative version not only stored the information of the placed Queens,
+// but also a "threat map" on which the unsafe positions are already shaded out.
 
 #include <bitset>
 #include <iostream>
 
-int eightQueen()
+// Using iteration
+int eightQueen_Iteration()
 {
     // board numbering from 1 to 8
     //   1 2 3 4 5 6 7 8  <- columns
@@ -91,8 +95,48 @@ int eightQueen()
     return solution;
 }
 
+// Using Recursion
+void placingQueenOnLine(int* position, int currentRow, int& solution)
+{
+    // STOP case
+    if (currentRow == 9)
+    {
+        ++solution;
+        return;
+    }
+    for (int currentColumn { 1 }; currentColumn <= 8; ++currentColumn)
+    {
+        int row { 1 };
+        for (; row < currentRow; ++row)
+        {
+            // illegal position
+            if (position[row] == currentColumn                          // in the same column
+                || row - position[row] == currentRow - currentColumn    // in the same 45 diagonal
+                || row + position[row] == currentRow + currentColumn)   // in the same 135 diagonal
+                    break;
+        }
+        // legal position found
+        if (row == currentRow)
+        {
+            position[currentRow] = currentColumn;
+            placingQueenOnLine(position, currentRow + 1, solution);
+            // not necessary, but good for logic
+            position[currentRow] = 0;
+        }
+    }
+}
+
+int eightQueen_Recursion()
+{
+    // these variable should be defined in a higher level than the recursive function itself
+    int position[9] {};
+    int solution { 0 };
+    placingQueenOnLine(position, 1, solution);
+    return solution;
+}
+
 int main(int argc, char* argv[])
 {
-    std::cout << "found " << eightQueen() << " solutions" << std::endl;
+    std::cout << "found " << eightQueen_Recursion() << " solutions" << std::endl;
     return 0;
 }
