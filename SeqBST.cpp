@@ -5,10 +5,10 @@
 #include <initializer_list>
 #include <iostream>
 
-class SeqBinaryTree
+class SeqBST
 {
 public:
-    SeqBinaryTree(const std::initializer_list<int>& list)
+    SeqBST(const std::initializer_list<int>& list)
     {
         for (auto i : list)
         {
@@ -40,7 +40,7 @@ private:
 
 int main(int argc, char* argv[])
 {
-    SeqBinaryTree tree {6, 9, 3, 7, 11, 4, 17, 5, 12, 14, 1, 15, 2, 13, 16, 10, 19, 18, 8, 20};
+    SeqBST tree {6, 9, 3, 7, 11, 4, 17, 5, 12, 14, 1, 15, 2, 13, 16, 10, 19, 18, 8, 20};
     tree.printList();
     return 0;
 }

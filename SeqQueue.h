@@ -11,7 +11,7 @@ template <typename T>
 class SeqQueue
 {
 private:
-    static constexpr int kDefaultCapacity { 16 };
+    static constexpr int kDefaultCapacity { 1024 };
 public:
     SeqQueue()
         : m_queue { new T[kDefaultCapacity] }, m_front { kDefaultCapacity - 1 }, m_rear { kDefaultCapacity - 1 } {}
