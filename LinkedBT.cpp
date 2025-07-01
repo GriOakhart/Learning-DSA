@@ -27,28 +27,22 @@ void LinkedBT<T>::init(const T (&arr)[N])
 {
     // starting from arr[1], the arr[0] is null.
     if (N <= 1) return;
-    SeqQueue<TreeNode*> queue;
+    SeqQueue<TreeNode*> parentQueue;
     m_root = new TreeNode { arr[1] };
-    queue.enqueue(m_root);
+    parentQueue.enqueue(m_root);
 
-    TreeNode* leftNode { nullptr };
-    TreeNode* rightNode { nullptr };
-    for (int i = 2; i < N; ++i)
+    int currentIndex { 2 };
+    while (currentIndex < N)
     {
-        auto newNode = new TreeNode { arr[i] };
-        queue.enqueue(newNode);
-        if (i & 1)  // i is odd
+        auto parent { parentQueue.dequeue().value() };
+
+        parent->left = new TreeNode { arr[currentIndex++] };
+        parentQueue.enqueue(parent->left);
+
+        if (currentIndex < N)
         {
-            rightNode = newNode;
-            auto fatherNode = queue.dequeue();
-            fatherNode.value()->left = leftNode;
-            fatherNode.value()->right = rightNode;
-        }
-        else
-        {
-            leftNode = newNode;
-            if (i == N - 1)
-                queue.dequeue().value()->left = leftNode;
+            parent->right = new TreeNode { arr[currentIndex++] };
+            parentQueue.enqueue(parent->right);
         }
     }
 }
