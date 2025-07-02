@@ -2,6 +2,7 @@
 // Created by jason on 7/1/25.
 //
 
+#include <iostream>
 #include "SeqQueue.h"
 
 template <typename T>
@@ -36,20 +37,28 @@ void LinkedBT<T>::init(const T (&arr)[N])
     {
         auto parent { parentQueue.dequeue().value() };
 
-        parent->left = new TreeNode { arr[currentIndex++] };
-        parentQueue.enqueue(parent->left);
+        if (arr[currentIndex])
+        {
+            parent->left = new TreeNode { arr[currentIndex] };
+            parentQueue.enqueue(parent->left);
+        }
+        ++currentIndex;
 
         if (currentIndex < N)
         {
-            parent->right = new TreeNode { arr[currentIndex++] };
-            parentQueue.enqueue(parent->right);
+            if (arr[currentIndex])
+            {
+                parent->right = new TreeNode { arr[currentIndex] };
+                parentQueue.enqueue(parent->right);
+            }
+            ++currentIndex;
         }
     }
 }
 
 int main(int argc, char* argv[])
 {
-    int myArr[17] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+    int myArr[16] { 0, 6, 3, 8, 2, 5, 7, 9, 0, 0, 4, 0, 0, 0, 0, 10 };
     LinkedBT<int> tree;
     tree.init(myArr);
     return 0;
