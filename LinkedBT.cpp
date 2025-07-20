@@ -18,8 +18,14 @@ public:
     LinkedBT() = default;
     template <std::size_t N>
     void init(const T (&arr)[N]);
+    void printPreOrder() const;
+    void printInOrder() const;
+    void printPostOrder() const;
 private:
     TreeNode* m_root { nullptr };
+    void printPreOrderHelper(TreeNode* node) const;
+    void printInOrderHelper(TreeNode* node) const;
+    void printPostOrderHelper(TreeNode* node) const;
 };
 
 template <typename T>
@@ -40,7 +46,7 @@ void LinkedBT<T>::init(const T (&arr)[N])
 
         if (arr[currentIndex])
         {
-            std::cerr << "enqueue " << arr[currentIndex] << " to parentQueue" << std::endl;
+            // std::cerr << "enqueue " << arr[currentIndex] << " to parentQueue" << std::endl;
             parent->left = new TreeNode { arr[currentIndex] };
         }
         parentQueue.enqueue(parent->left);
@@ -50,7 +56,7 @@ void LinkedBT<T>::init(const T (&arr)[N])
         {
             if (arr[currentIndex])
             {
-                std::cerr << "enqueue " << arr[currentIndex] << " to parentQueue" << std::endl;
+                // std::cerr << "enqueue " << arr[currentIndex] << " to parentQueue" << std::endl;
                 parent->right = new TreeNode { arr[currentIndex] };
             }
             parentQueue.enqueue(parent->right);
@@ -59,10 +65,62 @@ void LinkedBT<T>::init(const T (&arr)[N])
     }
 }
 
+template <typename T>
+void LinkedBT<T>::printPreOrderHelper(TreeNode* node) const
+{
+    if (!node) return;
+    std::cout << node->data << " ";
+    printPreOrderHelper(node->left);
+    printPreOrderHelper(node->right);
+}
+
+template <typename T>
+void LinkedBT<T>::printInOrderHelper(TreeNode* node) const
+{
+    if (!node) return;
+    printInOrderHelper(node->left);
+    std::cout << node->data << " ";
+    printInOrderHelper(node->right);
+}
+
+template <typename T>
+void LinkedBT<T>::printPostOrderHelper(TreeNode* node) const
+{
+    if (!node) return;
+    printPostOrderHelper(node->left);
+    printPostOrderHelper(node->right);
+    std::cout << node->data << " ";
+}
+
+template <typename T>
+void LinkedBT<T>::printPreOrder() const
+{
+    printPreOrderHelper(m_root);
+    std::cout << '\n';
+}
+
+template <typename T>
+void LinkedBT<T>::printInOrder() const
+{
+    printInOrderHelper(m_root);
+    std::cout << '\n';
+}
+
+template <typename T>
+void LinkedBT<T>::printPostOrder() const
+{
+    printPostOrderHelper(m_root);
+    std::cout << '\n';
+}
+
 int main(int argc, char* argv[])
 {
-    int myArr[17] { 0, 6, 3, 8, 2, 5, 7, 9, 0, 0, 4, 0, 0, 0, 0, 10, 1 };
+    int myArr[16] { 0, 6, 3, 8, 2, 5, 7, 9, 0, 0, 4, 0, 0, 0, 0, 10 };
     LinkedBT<int> tree;
     tree.init(myArr);
+
+    tree.printPreOrder();
+    tree.printInOrder();
+    tree.printPostOrder();
     return 0;
 }
