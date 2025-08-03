@@ -42,7 +42,21 @@ void LinkedBT<T>::init(const T (&arr)[N])
     while (currentIndex < N)
     {
         auto parent { parentQueue.dequeue().value() };
-        if (!parent) throw std::runtime_error("parent is null");
+        // Previous version: directly throws exception when parent is null,
+        // which doesn't handle null parent nodes in the middle of the tree
+        // if (!parent) throw std::runtime_error("parent is null");
+
+        // Current version: when parent is null, check if its children are non-null (invalid case)
+        // If children are null, enqueue nullptrs to maintain tree structure and continue
+        if (!parent)
+        {
+            if (arr[currentIndex] || arr[currentIndex + 1])
+                throw std::runtime_error("parent is null");
+            parentQueue.enqueue(nullptr);
+            parentQueue.enqueue(nullptr);
+            currentIndex += 2;
+            continue;
+        }
 
         if (arr[currentIndex])
         {
@@ -115,7 +129,10 @@ void LinkedBT<T>::printPostOrder() const
 
 int main(int argc, char* argv[])
 {
-    int myArr[16] { 0, 6, 3, 8, 2, 5, 7, 9, 0, 0, 4, 0, 0, 0, 0, 10 };
+    // int myArr[16] { 0, 6, 3, 8, 2, 5, 7, 9, 0, 0, 4, 0, 0, 0, 0, 10 };
+    // The previous algorithm has a fatal issue:
+    // it crashes when creating a tree where some branches have a greater depth
+    int myArr[8] { 0, 6, 0, 3, 0, 0, 0, 8 };
     LinkedBT<int> tree;
     tree.init(myArr);
 
