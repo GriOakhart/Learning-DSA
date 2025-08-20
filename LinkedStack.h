@@ -50,7 +50,8 @@ public:
      */
     [[nodiscard]] bool empty() const
     {
-        return !m_top; }
+        return !m_top;
+    }
 private:
     std::shared_ptr<Node> m_top { nullptr };
 };
